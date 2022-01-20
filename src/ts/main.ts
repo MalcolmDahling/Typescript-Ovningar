@@ -3,7 +3,9 @@ import { IService } from '../interfaces/IService';
 
 class Main{
     start(service:IService){
-        console.log(service.GetData());
+        let movieArray = service.GetData();
+
+        console.log(movieArray);
     }
 }
 

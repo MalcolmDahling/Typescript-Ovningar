@@ -522,7 +522,8 @@ function hmrAcceptRun(bundle, id) {
 var _service = require("../services/Service");
 class Main {
     start(service1) {
-        console.log(service1.GetData());
+        let movieArray = service1.GetData();
+        console.log(movieArray);
     }
 }
 let main = new Main();
@@ -536,17 +537,12 @@ parcelHelpers.export(exports, "Service", ()=>Service
 );
 class Service {
     GetData() {
-        let movie = new Map();
-        fetch('https://www.omdbapi.com/?apikey=f6e0fd65&s=gunde').then((response)=>response.json
-        ).then((data1)=>function(data) {
-                movie.set('title', data.title);
-                movie.set('year', data.year);
-                movie.set('imdbID', data.imdbID);
-                movie.set('type', data.type);
-                movie.set('poster', data.poster);
-            }
-        );
-    //return movie;
+        let movieArray = [];
+        fetch('https://www.omdbapi.com/?apikey=f6e0fd65&s=indiana').then((response)=>response.json()
+        ).then((data)=>{
+            for(let i = 0; i < data.Search.length; i++)movieArray.push(data.Search[i]);
+        });
+        return movieArray;
     }
 }
 
