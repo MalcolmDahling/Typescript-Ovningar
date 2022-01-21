@@ -4,9 +4,9 @@ import { IService } from "../interfaces/IService";
 
 export class Service implements IService{
 
-    async GetData(){
+    async GetData(searchMovie){
 
-        let response = await fetch('https://www.omdbapi.com/?apikey=f6e0fd65&s=indiana');
+        let response = await fetch('https://www.omdbapi.com/?apikey=f6e0fd65&s='+searchMovie);
         let data = await response.json();
         return data;
         

@@ -1,3 +1,3 @@
 export interface IService{
-    GetData();
+    GetData(searchMovie:string);
 }
