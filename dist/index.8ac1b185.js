@@ -523,7 +523,18 @@ var _service = require("../services/Service");
 class Main {
     start(service1) {
         let movieArray = service1.GetData();
-        console.log(movieArray);
+        movieArray.then((data)=>{
+            console.log(data.Search);
+            for(let i = 0; i < data.Search.length; i++)document.body.insertAdjacentHTML('beforeend', `
+                    <div style="border:2px solid black; margin-bottom:10px; padding:10px; width:fit-content;">
+                        <h2>${data.Search[i].Title}</h2>
+                        <p>Type: ${data.Search[i].Type}</p>
+                        <p>Year: ${data.Search[i].Year}</p>
+                        <p>IMDB-ID: ${data.Search[i].imdbID}</p>
+                        <img src="${data.Search[i].Poster}"></img>
+                    </div>
+                `);
+        });
     }
 }
 let main = new Main();
@@ -534,15 +545,26 @@ main.start(service);
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Service", ()=>Service
-);
+) // export class Service implements IService{
+ //     GetData(){
+ //         let movieArray = [];
+ //         fetch('https://www.omdbapi.com/?apikey=f6e0fd65&s=indiana')
+ //             .then(response => response.json())
+ //             .then(data => {
+ //                 for(let i = 0; i < data.Search.length; i++){
+ //                     movieArray.push(data.Search[i]);
+ //                 }
+ //             }
+ //         );
+ //         return movieArray;
+ //     }
+ // }
+;
 class Service {
-    GetData() {
-        let movieArray = [];
-        fetch('https://www.omdbapi.com/?apikey=f6e0fd65&s=indiana').then((response)=>response.json()
-        ).then((data)=>{
-            for(let i = 0; i < data.Search.length; i++)movieArray.push(data.Search[i]);
-        });
-        return movieArray;
+    async GetData() {
+        let response = await fetch('https://www.omdbapi.com/?apikey=f6e0fd65&s=indiana');
+        let data = await response.json();
+        return data;
     }
 }
 
